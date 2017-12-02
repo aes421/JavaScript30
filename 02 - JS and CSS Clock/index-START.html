@@ -62,12 +62,37 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transition: : all 0.05s;
     }
 
   </style>
 
   <script>
+    drawClock();
+    window.setInterval(drawClock, 1000);
 
+    function drawClock(){
+        var time = new Date();
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var seconds = time.getSeconds();
+
+        var hourHand = document.querySelector(".hour-hand");
+        var minuteHand = document.querySelector(".min-hand");
+        var secondHand = document.querySelector(".second-hand");
+
+        var hourDegree = (hourHand, (hours*30)+90);
+        var minuteDegree = (minuteHand, (minutes*6)+90);
+        var secondDegree = (secondHand, (seconds*6)+90);
+        moveHand(hourHand, hourDegree);
+        moveHand(minuteHand, minuteDegree);
+        moveHand(secondHand, secondDegree);
+    }
+
+    function moveHand(hand, degrees){
+        hand.style.transform = `rotate(${degrees}deg)`;
+    }
 
   </script>
 </body>
