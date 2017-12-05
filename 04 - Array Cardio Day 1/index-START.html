@@ -31,29 +31,71 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    var inventors15XX = inventors.filter( inventor =>
+        (inventor.year >= 1500 && inventor.year < 1600)
+    );
+    console.table(inventors15XX);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    var inventorsFirstLast = inventors.map(inventor =>
+        inventor.fullName = `${inventor.first} ${inventor.last}`);
+
+    console.log(inventorsFirstLast);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    var inventorsOldToYoung = inventors.sort((inventor1, inventor2) => {
+        //returns - num if inventor 1 is older
+        //returns + num if inventor1 is younger
+        //returns 0 if the same
+        return inventor2.year - inventor1.year;
+    });
+
+    console.table(inventorsOldToYoung);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    const accum = (accumulator, currentValue) => accumulator + currentValue;
+    var totalYearsLive = inventors.map(inventor => (inventor.passed -
+        inventor.year)).reduce(accum);
+
+    console.log(totalYearsLive);
 
     // 5. Sort the inventors by years lived
+    var yearsLivedArray = inventors.sort(function(a,b){
+        return a.passed - a.year > b.passed - b.year ? -1 : 1
+    });
+
+    console.table(yearsLivedArray);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // var boulevards = Array.from(
+    //     document.querySelectorAll('.mw-category a'))
+    //     .map(link => link.title)
+    //     .filter(title => title.includes("de") ? true : false);
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    var alpha = people.sort();
+
+    console.table(alpha);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
 
+    var instances = data.reduce((accum, value) =>{
+        if (!accum[value]){
+            accum[value] = 0;
+        }
+        accum[value]++;
+        return accum;
+    }, {});
+
+    console.table(instances);
   </script>
 </body>
 </html>
