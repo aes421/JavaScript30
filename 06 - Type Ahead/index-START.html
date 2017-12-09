@@ -16,6 +16,34 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+var CITIES_LIST = [];
+var list = [];
+fetch(endpoint)
+    .then(stream => stream.json())
+    .then(data => CITIES_LIST = data);
+
+var searchbar = document.querySelector(".search");
+var suggestions = document.querySelector(".suggestions");
+
+searchbar.addEventListener("keyup" , createList);
+
+function lookup(word, cities){
+    list = cities.filter(object => object.city.toUpperCase()
+        .includes(word.toUpperCase()) || object.state.toUpperCase()
+            .includes(word.toUpperCase()));
+    return list;
+}
+
+function createList(evt){
+    var list = lookup(this.value, CITIES_LIST);
+    var html = list.map( value =>
+        `<li> <span>${value.city}, ${value.state}</span>
+            <span>${value.population}</span>
+            </li>`);
+
+    suggestions.innerHTML = html;
+}
+
 
 </script>
   </body>
