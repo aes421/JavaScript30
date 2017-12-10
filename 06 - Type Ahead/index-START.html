@@ -36,12 +36,24 @@ function lookup(word, cities){
 
 function createList(evt){
     var list = lookup(this.value, CITIES_LIST);
-    var html = list.map( value =>
-        `<li> <span>${value.city}, ${value.state}</span>
-            <span>${value.population}</span>
-            </li>`);
+
+    var html = list.map( place =>{
+        const regex = new RegExp(this.value, 'gi');
+        var cityName = place.city.replace(regex, `<span class="hl">
+            ${this.value}</span>`);
+        var stateName = place.state.replace(regex, `<span class="hl">
+            ${this.value}</span>`);
+        var population = numberWithCommas(place.population);
+        return `<li> <span>${cityName}, ${stateName}</span>
+            <span>${population}</span>
+            </li>`
+        });
 
     suggestions.innerHTML = html;
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
 
